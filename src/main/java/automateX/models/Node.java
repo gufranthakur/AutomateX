@@ -21,16 +21,19 @@ public abstract class Node extends JPanel {
         this.rung = rung;
         this.nodeID = nodeID;
 
-        nodeDimension = new Dimension(150, 120);
+        nodeDimension = new Dimension(110, 120);
         this.setMinimumSize(nodeDimension);
         this.setPreferredSize(nodeDimension);
         this.setMaximumSize(nodeDimension);
+        this.setBackground(rung.getBackground()
+        );
         this.setFocusable(true);
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 rung.setCurrentNode(Node.this);
+                rung.programPanel.setSelectedRung(rung);
             }
 
             @Override

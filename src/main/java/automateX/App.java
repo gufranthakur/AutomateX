@@ -38,7 +38,8 @@ public class App extends JFrame {
         controlPanel.initButtons();
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                controlPanel.getRootPanel(), programPanel);
+                controlPanel.getRootPanel(), programPanel.scrollPane);
+
 
         loopTimer = new Timer(16, e -> {
             revalidate();

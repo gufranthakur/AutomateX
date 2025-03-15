@@ -2,6 +2,7 @@ package automateX.core;
 
 import automateX.App;
 import automateX.models.Rung;
+import automateX.models.nodes.ncNode;
 import automateX.models.nodes.noNode;
 
 import javax.swing.*;
@@ -77,6 +78,14 @@ public class ControlPanel {
         });
 
         ncButton = new JButton("NC Latch");
+        ncButton.addActionListener(e -> {
+            Rung selectedRung = app.programPanel.getSelectedRung();
+
+            if (selectedRung == null) {
+                selectedRung = app.programPanel.getRungs().getLast();
+            }
+            selectedRung.addNode(new ncNode(selectedRung, selectedRung.getNodes().size()));
+        });
         outputLatchButton = new JButton("Output Latch");
     }
 

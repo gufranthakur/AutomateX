@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Rung extends JPanel {
 
-    private ProgramPanel programPanel;
+    public ProgramPanel programPanel;
     private Dimension rungDimension;
 
     private final int offset = 30;
@@ -22,7 +22,7 @@ public class Rung extends JPanel {
         this.programPanel = programPanel;
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        rungDimension = new Dimension(3000, 150);
+        rungDimension = new Dimension(1100, 150);
 
         this.setPreferredSize(rungDimension);
         this.setMaximumSize(rungDimension);
