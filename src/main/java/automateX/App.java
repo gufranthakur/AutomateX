@@ -1,5 +1,7 @@
 package automateX;
 
+import automateX.models.Node;
+import automateX.models.Rung;
 import com.formdev.flatlaf.fonts.inter.FlatInterFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import automateX.core.ControlPanel;
@@ -13,6 +15,8 @@ public class App extends JFrame {
     public JSplitPane splitPane;
     public ProgramPanel programPanel;
     public ControlPanel controlPanel;
+
+    private Timer loopTimer;
 
     public Font buttonsFont = new Font(FlatInterFont.FAMILY, Font.PLAIN, 20);
 
@@ -36,6 +40,11 @@ public class App extends JFrame {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 controlPanel.getRootPanel(), programPanel);
 
+        loopTimer = new Timer(16, e -> {
+            revalidate();
+            repaint();
+        });
+
     }
 
     public void addComponent() {
@@ -44,6 +53,15 @@ public class App extends JFrame {
         this.add(splitPane, BorderLayout.CENTER);
 
         this.setVisible(true);
+
+        loopTimer.start();
+    }
+
+    public void execute() {
+        Node firstNode = programPanel.getRungs().getFirst().getNodes().getFirst();
+        firstNode.isActive = true;
+        firstNode.execute();
+
     }
 
     public static void main(String[] args) {

@@ -4,6 +4,8 @@ import automateX.core.ProgramPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Rung extends JPanel {
@@ -25,23 +27,30 @@ public class Rung extends JPanel {
         this.setPreferredSize(rungDimension);
         this.setMaximumSize(rungDimension);
         this.setBackground(programPanel.getBackground().brighter());
-        this.add(Box.createHorizontalStrut(offset));
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                programPanel.setSelectedRung(Rung.this);
+            }
+        });
+        this.add(Box.createHorizontalStrut(offset + 20));
 
         nodes = new ArrayList<>();
-
-        //addNode(new Node(this));
 
     }
 
     public void addNode(Node node) {
         if (nodes.isEmpty()) {
             nodes.add(node);
-            this.add(Box.createHorizontalStrut(20));
+
             this.add(node);
         } else {
+            node.inputNode = nodes.getLast();
+            nodes.getLast().outputNode = node;
+
             nodes.add(node);
-            node.startConnection();
-            this.add(Box.createHorizontalStrut(20));
+
             this.add(node);
         }
 
@@ -49,15 +58,12 @@ public class Rung extends JPanel {
 
     }
 
-    public void establishConnection(Node node) {
-        node.setOutputNode(currentNode);
-        currentNode.setInputNode(node);
-
-
-    }
-
     public void setCurrentNode(Node node) {
         this.currentNode = node;
+    }
+
+    public ArrayList<Node> getNodes() {
+        return nodes;
     }
 
     @Override

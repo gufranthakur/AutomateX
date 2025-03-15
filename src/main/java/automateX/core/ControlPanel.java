@@ -1,8 +1,8 @@
 package automateX.core;
 
 import automateX.App;
-import automateX.models.Node;
 import automateX.models.Rung;
+import automateX.models.nodes.noNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ControlPanel {
     private JPanel rootPanel;
     private JTabbedPane tabbedPanel;
-    private JPanel explorerPanel;
+    private JPanel controlsPanel;
     private JPanel datafilesPanel;
     private JPanel plcPanel;
     private JPanel runPanel;
@@ -22,6 +22,8 @@ public class ControlPanel {
     private JComboBox functionsBox;
     private JPanel functionContainer;
     private JPanel boxPanel;
+    private JButton deleteRungButton;
+    private JButton addRungButton;
 
     private App app;
 
@@ -54,13 +56,24 @@ public class ControlPanel {
     }
 
     public void initButtons() {
-        Rung selectedRung = app.programPanel.getRungs().getLast();
+        runButton.addActionListener(e -> {
+            app.execute();
+        });
+
+        addRungButton.addActionListener(e -> {
+            app.programPanel.addRung(new Rung(app.programPanel));
+        });
+
 
         noButton = new JButton("NO Latch");
 
         noButton.addActionListener(e -> {
+            Rung selectedRung = app.programPanel.getSelectedRung();
 
-           // selectedRung.addNode(new Node(selectedRung));
+            if (selectedRung == null) {
+                selectedRung = app.programPanel.getRungs().getLast();
+            }
+            selectedRung.addNode(new noNode(selectedRung, selectedRung.getNodes().size()));
         });
 
         ncButton = new JButton("NC Latch");

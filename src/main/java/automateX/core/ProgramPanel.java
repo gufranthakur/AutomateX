@@ -11,6 +11,7 @@ public class ProgramPanel extends JPanel {
     public App app;
 
     private ArrayList<Rung> rungs;
+    private Rung selectedRung;
 
     public ProgramPanel(App app) {
         this.app = app;
@@ -28,6 +29,14 @@ public class ProgramPanel extends JPanel {
 
     public void init() {
 
+    }
+
+    public void setSelectedRung(Rung rung) {
+        this.selectedRung = rung;
+    }
+
+    public Rung getSelectedRung() {
+        return selectedRung;
     }
 
     public ArrayList<Rung> getRungs() {
