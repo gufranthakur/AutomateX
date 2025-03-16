@@ -22,6 +22,7 @@ public class App extends JFrame {
 
     public App() {
         this.setSize(1200, 700);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setTitle("AutomateX");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -59,9 +60,11 @@ public class App extends JFrame {
     }
 
     public void execute() {
-        Node firstNode = programPanel.getRungs().getFirst().getNodes().getFirst();
-        firstNode.isActive = true;
-        firstNode.execute();
+
+
+    }
+
+    public void stop() {
 
     }
 

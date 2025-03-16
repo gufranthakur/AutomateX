@@ -27,22 +27,45 @@ public class noNode extends Node {
         g2D.setColor(color);
         g2D.setStroke(new BasicStroke(2f));
 
-        g2D.drawLine(0, getHeight() / 2, margin, getHeight() / 2);
-        g2D.drawLine(margin, margin, margin, getHeight() - margin);
-        g2D.drawLine(margin * 2, margin, margin * 2, getHeight() - margin);
-        g2D.drawLine(margin * 2, getHeight() / 2, 150, getHeight() / 2);
+        if (!isActive) {
+            g2D.drawLine(0, getHeight() / 2, margin, getHeight() / 2);
+            g2D.drawLine(margin, margin, margin, getHeight() - margin);
+            g2D.drawLine(margin * 2, margin, margin * 2, getHeight() - margin);
+            g2D.drawLine(margin * 2, getHeight() / 2, 150, getHeight() / 2);
+        } else {
+            g2D.drawLine(0, getHeight() / 2, margin, getHeight() / 2);
+            g2D.drawLine(margin, margin, margin, getHeight() - margin);
+
+            g2D.drawLine(margin, margin, margin * 2, margin * 2 + (margin/2));
+
+            g2D.drawLine(margin * 2, margin, margin * 2, getHeight() - margin);
+            g2D.drawLine(margin * 2, getHeight() / 2, 150, getHeight() / 2);
+        }
     }
 
     @Override
-    public void execute() {
-        if (isActive) {
+    public void activate() {
+        System.out.println("Node " + nodeID + " Activated");
+        isActive = true;
 
-            color = (new Color(70, 255, 105));
+        color = (new Color(70, 255, 105));
 
-            if (outputNode == null) return;
-            outputNode.isActive = true;
-            outputNode.execute();
-        }
+        if (outputNode == null) return;
+        if (outputNode instanceof noNode) return;
+        outputNode.isActive = true;
+        outputNode.activate();
+
+    }
+
+    @Override
+    public void deactivate() {
+        isActive = false;
+
+        color = Color.WHITE;
+        if (outputNode == null) return;
+
+        outputNode.isActive = false;
+        outputNode.deactivate();
     }
 
 }

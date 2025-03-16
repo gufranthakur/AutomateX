@@ -4,6 +4,7 @@ import automateX.App;
 import automateX.models.Rung;
 import automateX.models.nodes.ncNode;
 import automateX.models.nodes.noNode;
+import automateX.models.nodes.outputNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,7 @@ public class ControlPanel {
     private JButton addRungButton;
 
     private App app;
+    public boolean isRunning = false;
 
     public ArrayList<JButton> userButtons;
         private JButton noButton, ncButton, outputLatchButton;
@@ -36,7 +38,7 @@ public class ControlPanel {
     public ArrayList<JButton> arithmeticButtons;
     public ArrayList<JButton> compareButtons;
 
-    private Dimension buttonDimension = new Dimension(250, 40);
+    private Dimension buttonDimension = new Dimension(150, 40);
 
     public ControlPanel(App app) {
         this.app = app;
@@ -58,11 +60,27 @@ public class ControlPanel {
 
     public void initButtons() {
         runButton.addActionListener(e -> {
-            app.execute();
+            if (!isRunning) {
+                app.execute();
+                runButton.setBackground(new Color(234, 75, 75));
+                runButton.setText("Stop");
+                isRunning = true;
+
+            } else {
+                app.stop();
+                runButton.setBackground(new Color(5, 186, 9));
+                runButton.setText("Run");
+                isRunning = false;
+            }
+
         });
 
         addRungButton.addActionListener(e -> {
             app.programPanel.addRung(new Rung(app.programPanel));
+        });
+
+        deleteRungButton.addActionListener(e -> {
+
         });
 
 
@@ -87,6 +105,14 @@ public class ControlPanel {
             selectedRung.addNode(new ncNode(selectedRung, selectedRung.getNodes().size()));
         });
         outputLatchButton = new JButton("Output Latch");
+        outputLatchButton.addActionListener(e -> {
+            Rung selectedRung = app.programPanel.getSelectedRung();
+
+            if (selectedRung == null) {
+                selectedRung = app.programPanel.getRungs().getLast();
+            }
+            selectedRung.addNode(new outputNode(selectedRung, selectedRung.getNodes().size()));
+        });
     }
 
     public void addComponent() {

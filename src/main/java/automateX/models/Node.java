@@ -48,6 +48,7 @@ public abstract class Node extends JPanel {
 
             private void checkForPopupTrigger(MouseEvent e) {
                 if (e.isPopupTrigger() || SwingUtilities.isRightMouseButton(e)) {
+
                     showPopup();
                 }
             }
@@ -59,9 +60,16 @@ public abstract class Node extends JPanel {
         JPopupMenu popupMenu = new JPopupMenu();
 
         // Toggle active status option
-        JMenuItem toggleItem = new JMenuItem(isActive ? "Deactivate" : "Activate");
+        JMenuItem toggleItem = new JMenuItem("Activate");
         toggleItem.addActionListener(e -> {
-            isActive = !isActive;
+            if (isActive) {
+                toggleItem.setText("Deactivate");
+                deactivate();
+            } else {
+                toggleItem.setText("Activate");
+                activate();
+            }
+
             repaint();
         });
 
@@ -103,6 +111,8 @@ public abstract class Node extends JPanel {
         this.outputNode = outputNode;
     }
 
-    public abstract void execute();
+    public abstract void activate();
+
+    public abstract void deactivate();
 
 }

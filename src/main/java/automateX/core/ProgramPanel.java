@@ -1,6 +1,7 @@
 package automateX.core;
 
 import automateX.App;
+import automateX.models.Node;
 import automateX.models.Rung;
 
 import javax.swing.*;
