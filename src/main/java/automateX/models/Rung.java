@@ -3,6 +3,9 @@ package automateX.models;
 import automateX.core.ProgramPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,6 +15,8 @@ public class Rung extends JPanel {
 
     public ProgramPanel programPanel;
     private Dimension rungDimension;
+    private Border selectedBorder = new LineBorder(new Color(37, 97, 209));
+    private Border emptyBorder = new EmptyBorder(0, 0, 0, 0);
 
     private final int offset = 30;
 
@@ -37,7 +42,6 @@ public class Rung extends JPanel {
         this.add(Box.createHorizontalStrut(offset + 20));
 
         nodes = new ArrayList<>();
-
     }
 
     public void addNode(Node node) {
@@ -60,6 +64,12 @@ public class Rung extends JPanel {
 
     public void setCurrentNode(Node node) {
         this.currentNode = node;
+        for (Rung r : programPanel.getRungs()){
+            for (Node n : r.getNodes()) {
+                n.setBorder(emptyBorder);
+            }
+        }
+        node.setBorder(selectedBorder);
     }
 
     public ArrayList<Node> getNodes() {
@@ -70,6 +80,9 @@ public class Rung extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
+
+        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
 
         g2D.setColor(Color.WHITE);
         g2D.setStroke(new BasicStroke(2f));
