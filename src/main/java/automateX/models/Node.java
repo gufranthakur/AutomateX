@@ -24,8 +24,8 @@ public abstract class Node extends JPanel {
     protected boolean isPowered = false;
 
     // UI properties
-    protected Dimension nodeDimension = new Dimension(110, 120);
-    protected int margin = 35;
+    protected Dimension nodeDimension = new Dimension(100, 100);
+    protected int margin = 30;
 
     /**
      * Constructor for Node

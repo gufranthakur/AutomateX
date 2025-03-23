@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class ncNode extends Node {
     private Color inactiveColor = Color.WHITE;
-    private Color activeColor = new Color(255, 80, 80); // Red
+    private Color activeColor = new Color(96, 126, 250); // Red
     private Color currentColor = inactiveColor;
 
     public ncNode(Rung rung, int nodeID) {
@@ -44,8 +44,8 @@ public class ncNode extends Node {
         // If node is powered, draw in a brighter color
         if (isPowered) {
             g2D.setColor(new Color(255, 215, 0)); // Gold color for power flow
-            g2D.setStroke(new BasicStroke(3f));
-            g2D.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
+            g2D.setStroke(new BasicStroke(1f));
+            g2D.drawLine(0, getHeight() - 10, getWidth(), getHeight() - 10);
         }
     }
 
@@ -70,9 +70,6 @@ public class ncNode extends Node {
         // Normally Closed: Pass power when NOT active AND receiving power
         boolean inputPower = getInputPower();
         isPowered = inputPower && !isActive;
-
-        System.out.println("NC Node " + nodeID + " - Input Power: " + inputPower +
-                ", Active: " + isActive + ", Output Power: " + isPowered);
 
         repaint();
     }

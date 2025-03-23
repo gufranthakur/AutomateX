@@ -9,7 +9,7 @@ import java.awt.*;
 public class outputNode extends Node {
     private int margin = 30;
     private Color inactiveColor = Color.WHITE;
-    private Color activeColor = new Color(70, 255, 105);
+    private Color activeColor = new Color(96, 126, 250);
     private Color currentColor = inactiveColor;
 
     public outputNode(Rung rung, int nodeID) {
@@ -47,12 +47,9 @@ public class outputNode extends Node {
         // If powered, highlight with a brighter color
         if (isPowered) {
             g2D.setColor(new Color(255, 215, 0)); // Gold color for power flow
-            g2D.setStroke(new BasicStroke(3f));
-            g2D.drawLine(0, getHeight() / 2, getWidth(), getHeight() / 2);
+            g2D.setStroke(new BasicStroke(1f));
+            g2D.drawLine(0, getHeight() - 10, getWidth(), getHeight() - 10);
 
-            // Fill coil with light glow when powered
-            g2D.setColor(new Color(255, 255, 150, 100));
-            g2D.fillOval(margin, margin, margin * 2, arcHeight);
         }
     }
 
@@ -85,7 +82,6 @@ public class outputNode extends Node {
             currentColor = inactiveColor;
         }
 
-        System.out.println("Output Node " + nodeID + " - Power state: " + isPowered);
         repaint();
     }
 }
