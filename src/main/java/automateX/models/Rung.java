@@ -19,14 +19,17 @@ public class Rung extends JPanel {
     private Border emptyBorder = new EmptyBorder(0, 0, 0, 0);
 
     private JPanel mainRung;
-    private JPanel branchRung;
+    public JPanel branchRung;
 
     private final int offset = 30;
 
     private ArrayList<Node> nodes;
     private Node currentNode;
-
     private ArrayList<Branch> branches;
+    private Branch currentBranch;
+    private Node branchStartNode = null;
+    public boolean rungSelected = false;
+    public boolean branchSelected = false;
 
     public Rung(ProgramPanel programPanel) {
         this.programPanel = programPanel;
@@ -40,7 +43,7 @@ public class Rung extends JPanel {
 
     private void initRungConfigurations() {
         rungDimension = new Dimension(1100, 300);
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(rungDimension);
         this.setMaximumSize(rungDimension);
         this.setBackground(programPanel.getBackground().brighter());
@@ -49,6 +52,9 @@ public class Rung extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 programPanel.setSelectedRung(Rung.this);
+
+                rungSelected = true;
+                branchSelected = false;
             }
         });
         this.add(Box.createHorizontalStrut(offset + 20));
@@ -95,8 +101,8 @@ public class Rung extends JPanel {
         branchRung.setPreferredSize(new Dimension(1100, 150));
         branchRung.setMaximumSize(new Dimension(1100, 150));
 
-        this.add(mainRung, BorderLayout.CENTER);
-        this.add(branchRung, BorderLayout.SOUTH);
+        this.add(mainRung);
+        this.add(branchRung);
 
         setBranchState(false);
     }
@@ -120,6 +126,14 @@ public class Rung extends JPanel {
             }
         }
         node.setBorder(selectedBorder);
+
+        rungSelected = true;
+        branchSelected = false;
+
+        if (branchStartNode != null && branchStartNode != node) {
+            addBranch(branchStartNode, node);
+            branchStartNode = null;
+        }
     }
 
     public ArrayList<Node> getNodes() {
@@ -154,9 +168,45 @@ public class Rung extends JPanel {
 
     public void addBranch(Node startNode, Node endNode) {
         Branch branch = new Branch(this, branches.size(), startNode, endNode);
+        startNode.isBranched = true;
+            
 
         branches.add(branch);
+        branchRung.add(Box.createHorizontalStrut(startNode.nodeID * 100));
+        branchRung.add(branch);
 
+        setBranchState(true);
+
+        repaint();
+        revalidate();
+    }
+
+    public void startBranchCreation(Node startNode) {
+        this.branchStartNode = startNode;
+
+    }
+
+    public void setCurrentBranch(Branch branch) {
+        this.currentBranch = branch;
+
+        for (Rung r : programPanel.getRungs()){
+            for (Node n : r.getNodes()) {
+                n.setBorder(emptyBorder);
+            }
+        }
+
+        branch.setBorder(selectedBorder);
+
+        rungSelected = false;
+        branchSelected = true;
+    }
+
+    public Branch getCurrentBranch() {
+        return currentBranch;
+    }
+
+    public ArrayList<Branch> getBranches() {
+        return branches;
     }
 
 }

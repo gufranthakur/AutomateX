@@ -40,27 +40,33 @@ public class noNode extends Node {
             g2D.setStroke(new BasicStroke(1f));
             g2D.drawLine(0, getHeight() - 10, getWidth(), getHeight() - 10);
         }
+
+        if (isBranched) {
+            g2D.setColor(Color.WHITE);
+            g2D.setStroke(new BasicStroke(2f));
+            g2D.drawLine(15, getHeight() / 2, 15, getHeight());
+        }
     }
+
 
     @Override
     public void activate() {
         isActive = true;
         currentColor = activeColor;
-        updatePowerState();
         repaint();
+        updatePowerState();
     }
 
     @Override
     public void deactivate() {
         isActive = false;
         currentColor = inactiveColor;
-        updatePowerState();
         repaint();
+        updatePowerState();
     }
 
     @Override
     public void updatePowerState() {
-
         boolean inputPower = getInputPower();
         isPowered = inputPower && isActive;
 

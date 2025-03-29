@@ -92,7 +92,8 @@ public class ControlPanel {
             if (selectedRung == null) {
                 selectedRung = app.programPanel.getRungs().getLast();
             }
-            selectedRung.addNode(new noNode(selectedRung, selectedRung.getNodes().size()));
+            if (selectedRung.rungSelected) selectedRung.addNode(new noNode(selectedRung, selectedRung.getNodes().size()));
+            else if (selectedRung.branchSelected) selectedRung.getCurrentBranch().addNode(new noNode(selectedRung, selectedRung.getBranches().size()));
         });
 
         ncButton = new JButton("NC Latch");
@@ -102,7 +103,8 @@ public class ControlPanel {
             if (selectedRung == null) {
                 selectedRung = app.programPanel.getRungs().getLast();
             }
-            selectedRung.addNode(new ncNode(selectedRung, selectedRung.getNodes().size()));
+            if (selectedRung.rungSelected) selectedRung.addNode(new ncNode(selectedRung, selectedRung.getNodes().size()));
+            else if (selectedRung.branchSelected) selectedRung.getCurrentBranch().addNode(new ncNode(selectedRung, selectedRung.getBranches().size()));
         });
         outputLatchButton = new JButton("Output Latch");
         outputLatchButton.addActionListener(e -> {
